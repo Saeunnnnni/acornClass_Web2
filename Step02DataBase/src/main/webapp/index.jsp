@@ -16,16 +16,58 @@
 <head>
 <meta charset="UTF-8">
 <title>index.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
+<style>
+	h1{
+		margin : 30px auto;
+	}
+	
+	a{
+		text-decoration:none;
+	}
+	
+	.container > ul > li{
+		list-style: none;
+		color: 	#6495ED;
+		font-size:28px;
+		border: 5px solid #6495ED;
+		width:30%;
+		hieght:50px;
+		border-radius: 15px;
+		margin: 30px 20px;
+		padding:10px;
+		text-align:center;
+	}
+	
+	.container > ul {
+	
+		display:flex;
+	}
+	
+	.container > ul > li:hover{
+		background-color: #6495ED;
+		color: #ffffff;
+	}
+	
+</style>
 </head>
 <body>
+<%-- /include/navbar.jsp 페이지에게 ㅔ이 부분만 응답하도록 한다
+	include 되는 jsp 페이지에 파라미터를 전달할수도 있다. --%>
+	<%-- current라는 파라미터로 index를 전달한것과 같은 의미 --%>
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="index" name="current"/>
+	</jsp:include>
 	<div class="container">
 		<h1>인덱스 페이지 입니다.</h1>
-		<p>${pageContext.request.contextPath }</p>
+		<!--<p>${pageContext.request.contextPath }</p>  -->
 		<ul>
 			<li><a href="${pageContext.request.contextPath }/member/list.jsp">회원 목록보기</a></li>
 			<li><a href="${pageContext.request.contextPath }/guest/list.jsp">방명록 목록보기</a></li>
 		</ul>
 	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

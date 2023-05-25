@@ -18,6 +18,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
 </head>
 <body>
+
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="memeber" name="current"/>
+	</jsp:include>
+	
 	<div class="container">
 		<h1>회원 목록입니다.</h1>
 		<div class="text-end">
@@ -62,7 +67,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
