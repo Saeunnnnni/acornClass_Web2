@@ -1,5 +1,16 @@
 package test.guest.dto;
 
+
+/*
+ * 
+ * Dto의 필드 선언하기 
+ * - 필드의 type과 필드명 정하기
+ * - 테이블당 dto가 하나일까 ? -> 정확한것 주제별당 하나라고 생각하면 됨 
+ * 만약에 테이블 join을 하게 되면 ,,,,,
+ * 
+ * - 테이블 만들때 date로 만든다고 해도 타입을 string으로 해야함 
+ */
+
 public class GuestDto {
 	private int num;
 	private String writer;
@@ -7,7 +18,7 @@ public class GuestDto {
 	private String pwd;
 	private String regdate;
 	
-	
+	//디폴트 생성자는 꼭 ~!!! 있어야함 ~!!!
 	public GuestDto () {}
 
 

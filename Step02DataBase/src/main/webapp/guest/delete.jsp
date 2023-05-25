@@ -1,35 +1,42 @@
-
 <%@page import="test.guest.dao.GuestDao"%>
+<%@page import="test.guest.dto.GuestDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%
-		/*
-		이페이지에 요청이 될때  <a href="delete.jsp?num=x"></a>  형식의 링크를 눌러서 
-		GET 방식 요청이 되는 것이다.
-		따라서 GET 방식 요청 파라미터로 삭제할 회원의 번호가 전달이 된다.
-		해당 파라미터를 추출해서 DB 에서 삭제 하면 된다.
-		*/
-%>
-   <%
-   //1. 삭제할 회원의 번호를 얻어내서 
-   int num  =Integer.parseInt(request.getParameter("num"));
-   //2. db에서 삭제하고 
-   GuestDao.getInstance().delete(num);
+   //1. 삭제할 글의 정보를 읽어온다.
+   int num=Integer.parseInt(request.getParameter("num"));
+   String pwd=request.getParameter("pwd");
+   //2. DB 에서 삭제 한다. (두개의 정보를 dto에 담아준다 !)
+   GuestDto dto=new GuestDto();
+   dto.setNum(num);
+   dto.setPwd(pwd);
+   boolean isSuccess=GuestDao.getInstance().delete(dto);
    //3. 응답한다.
-   
-   /*
-   	[리다이렉트 응답]
-   	- 클라이언트에게 특정 경로로 요청을 다시 하라고 응답하는 것이다.
-   	- 다시 요청할 경로를 전달하면 클라이언트가 해당경로로 요청을 다시 하게 된다.
-   	- 따라서 순간적으로 페이지가 이동되게 된다.
-   	- HttpServletResponse 객체의 기능을 활용하면 된다
-   	- 요청을 다시할 경로를 전달할때는 반드시 절대경로(cPath+)로 전달하는 것이 좋다.
-   	- 새로운 경로로 요청을 다시 하라고 강요하는 것도 응답이다.
-   	: delete.jsp의 html을 작성해 줄 필요 없고 delete.jsp로 빠르게 이동했다가 다시 돌아옴 ! 
-   */
-   //context 경로 얻어내기 ( context 경로는 추후에 수정되거나 제거될 예정이기 때문에 )
-   String cPath=request.getContextPath();
-   //리다이렉트 응답하기
-   response.sendRedirect(cPath+"/guest/list.jsp");
-   %>
+%>    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/guest/delete.jsp</title>
+</head>
+<body>
+   <%if(isSuccess){ %>
+      <%
+         //삭제 성공이면 list.jsp 로 리다일렉트 이동시키기
+         String cPath=request.getContextPath();
+         response.sendRedirect(cPath+"/guest/list.jsp");
+      %>
+   <%}else{ %>
+      <script>
+         alert("비밀번호가 일치하지 않습니다.");
+         location.href="${pageContext.request.contextPath }/guest/list.jsp";
+      </script>
+   <%} %>
+</body>
+</html>
+
+
+
+
+
+

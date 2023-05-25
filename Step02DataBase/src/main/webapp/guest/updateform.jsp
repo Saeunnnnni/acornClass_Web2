@@ -23,15 +23,22 @@
 	margin: 30px 0}
 	
 	.container{
-		margin:0 auto;
+		margin:30px auto;
 		border: 1px solid #333;
 		text-align:center;
+		padding: 30px 0;
+		border: 2px solid blue;
+		border-radius: 30px;
 	}
 	
 	label{
 		font-size:20px;
 		font-weight:bold;
 	}
+	button{
+		margin:10px 30px;
+	}
+	
 	
 	
 	
@@ -40,7 +47,7 @@
 <body>
 	<div class="container">
 		<h1>회원정보 수정 양식</h1>
-		<form action="update.jsp" method="post">
+		<form action="${pageContext.request.contextPath }/guest/update.jsp" method="post">
 		<div class="input-box">
 				<label for="num">번호 : </label>
 				<input type="text" id="num" name="num" value="<%=dto.getNum() %>" readonly />
@@ -51,16 +58,22 @@
 			</div>
 			<div class="input-box">
 				<label for="content">내용 : </label>
-				<input type="text" id="content" name="content" value="<%=dto.getContent() %>" />
+				<textarea col="30" row="10" id="content" name="content" value="<%=dto.getContent() %>" ></textarea>
 			</div>
 			<div class="input-box">
 				<label for="pwd">비밀번호 : </label>
-				<input type="text" id="pwd" name="pwd" value="<%=dto.getPwd() %>" />
+				<input type="password" id="pwd" name="pwd" value="<%=dto.getPwd() %>" />
 			</div>
 			<div class="input-box">
 				<label for="regdate">작성일 : </label>
 				<input type="text" id="regdate" name="regdate" value="<%=dto.getRegdate() %>" />
 			</div>
+			
+			<div class="input-box">
+				<label for="pwd">글 작성시 입력했던 비밀번호</label>
+				<input type="password" id="pwd" name="pwd" />
+			</div>
+			
 			<button class="btn btn-outline-primary" type="submit">수정확인</button>
 			<button class="btn btn-outline-warning" type="reset">취소</button>
 		</form>

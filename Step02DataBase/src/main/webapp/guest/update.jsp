@@ -6,14 +6,18 @@
     
     <%
     request.setCharacterEncoding("utf-8");
+    
+    //1. 폼 전송되는 수정할 회원의 정보를 읽어온다.
     int num = Integer.parseInt(request.getParameter("num"));
     String writer= request.getParameter("writer");
     String content= request.getParameter("content");
     String pwd = request.getParameter("pwd");
     String regdate = request.getParameter("regdate");
     
+    //날짜는 수정 안하기때문에 null값으로 넣어줌
+    GuestDto dto = new GuestDto(num, writer, content, pwd, null);
     
-    GuestDto dto = new GuestDto(num, writer, content, pwd, regdate);
+    //2. db에서 수정 반영한다.
     boolean isSuccess=GuestDao.getInstance().update(dto);
     %>
 
@@ -28,7 +32,7 @@
 	<div class="container">
 		<%if(isSuccess){ %>
 			<p>
-				<strong><%=num %>번 회원의 정보를 수정하였습니다.</strong>
+				<strong><%=writer %>님이 작성한 글이 수정되었습니다.</strong>
 				<a class="alert-link" href="list.jsp">목록보기</a>
 			</p>
 		<%}else{ %>
