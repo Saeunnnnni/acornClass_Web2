@@ -20,7 +20,7 @@
 <body>
 
 	<jsp:include page="/include/navbar.jsp">
-		<jsp:param value="memeber" name="current"/>
+		<jsp:param value="member" name="current"/>
 	</jsp:include>
 	
 	<div class="container">
