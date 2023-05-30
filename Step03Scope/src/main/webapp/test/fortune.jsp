@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	//request영역에 fortunToday라는 키값으로 담긴 String type데이터를 읽어와서 casting
+	//request영역에 fortunToday라는 키값으로 담긴 String type 데이터를 읽어와서 casting
 	   String fortune=(String)request.getAttribute("fortuneToday"); 
 %>
     
