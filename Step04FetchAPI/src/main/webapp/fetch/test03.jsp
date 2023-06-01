@@ -29,7 +29,7 @@
         	*/
         	console.log(data);
         	//ul 요소가 끝나기 직전에 HTML로 평가해서 추가하기 
-        	document.querySelector("#msgList").insertAdjacentHTML("beforeEnd",data);
+        	document.querySelector("#msgList").insertAdjacentHTML("beforeend",data);
         });
       });
    </script>

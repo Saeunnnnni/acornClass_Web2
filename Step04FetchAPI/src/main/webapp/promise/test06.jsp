@@ -33,7 +33,6 @@
 	       }, 2000);
 	    });
 	 }
-	 
 	 openDoor()
 	 .then(function(){
 		 return putElephant();

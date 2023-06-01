@@ -22,7 +22,7 @@
 		
 		console.log("------");
 		
-		//fetch  함수가 무얼 하는 함수인지 잠시 테스트 해보세요
+		//fetch 함수가 무얼 하는 함수인지 잠시 테스트 해보세요
 		//위의 링크를 눌렀을때와 차이점은 ?
 		fetch("${pageContext.request.contextPath }/index.jsp") //promise type
 		.then(function(response){
