@@ -22,6 +22,121 @@ public class UsersDao {
 		return dao;
 	}
 	
+	//프로필 패스워드를 수정하는 메소드
+	public boolean updatePwd(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "update users"
+						+  " set pwd=?"
+						+ " where id=?";
+			pstmt = conn.prepareStatement(sql);
+			//실행할 sql 문이 미완성이라면 여기서 완성
+			pstmt.setString(1, dto.getPwd());
+			pstmt.setString(2, dto.getId());
+			//sql 문을 수행하고 변화된(추가, 수정, 삭제된) row 의 갯수 리턴 받기
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		//만일 변화된 row 의 갯수가 0 보다 크면 작업 성공
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//프로필 이미지 경로를 수정하는 메소드 
+	public boolean updateProfile(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "update users"
+						+  " set profile=?"
+						+ " where id=?";
+			pstmt = conn.prepareStatement(sql);
+			//실행할 sql 문이 미완성이라면 여기서 완성
+			pstmt.setString(1, dto.getProfile());
+			pstmt.setString(2, dto.getId());
+			//sql 문을 수행하고 변화된(추가, 수정, 삭제된) row 의 갯수 리턴 받기
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		//만일 변화된 row 의 갯수가 0 보다 크면 작업 성공
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//회원 한명의 정보를 리턴하는 메소드
+	public UsersDto getData(String id) {
+		UsersDto dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "Select pwd, email, profile, regdate"
+						+ " from users"
+						+ " where id=?";
+
+			pstmt = conn.prepareStatement(sql);
+			//실행할 sql 문이 미완성이라면 여기서 완성
+			pstmt.setString(1, id);
+			//select문 수행하고 결과값받아오기
+			rs = pstmt.executeQuery();
+			//반복문 돌면서 resultset에 담긴 내용 추출
+			while (rs.next()) {
+				
+				dto=new UsersDto();
+				dto.setId(id);
+				dto.setPwd(rs.getString("pwd"));
+				dto.setEmail(rs.getString("email"));
+				dto.setProfile(rs.getString("Profile"));
+				dto.setRegdate(rs.getString("regdate"));
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close(); //Connection 이 Connection Pool 에 반납된다.
+			} catch (Exception e) {
+			}
+		}
+		//회원 한명의 정보가 담긴 MemberDto객체 리턴해주기
+		return dto;
+	}
+	
 	  //인자로 전달되는 dto 에 있는 아이디와, 비밀번호를 이용해서 해당 정보가 유효한 정보인지 여부를 리턴하는 메소드 
 	   public boolean isValid(UsersDto dto) {
 	      
