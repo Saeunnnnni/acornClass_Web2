@@ -24,6 +24,97 @@ public class FileDao {
    } 
    
    
+  
+ //전체 글의 갯수를 리턴해주는 메소드
+ 	public int getCount() {
+ 		//글의 갯수를 담을 지역변수
+ 		int count =1;
+ 				
+ 		Connection conn = null;
+ 		PreparedStatement pstmt = null;
+ 		ResultSet rs = null;
+ 		int rowCount = 0;
+ 		try {
+ 			conn = new DbcpBean().getConn();
+ 			String sql = "select max(rownum) as num from board_file";
+
+ 			pstmt = conn.prepareStatement(sql);
+ 			//실행할 sql 문이 미완성이라면 여기서 완성
+
+ 			//select문 수행하고 결과값받아오기
+ 			rs = pstmt.executeQuery();
+ 			//반복문 돌면서 resultset에 담긴 내용 추출
+ 			while (rs.next()) {
+ 				count=rs.getInt("num");
+ 			}
+ 		} catch (SQLException se) {
+ 			se.printStackTrace();
+ 		} finally {
+ 			try {
+ 				if (rs != null)
+ 					rs.close();
+ 				if (pstmt != null)
+ 					pstmt.close();
+ 				if (conn != null)
+ 					conn.close(); //Connection 이 Connection Pool 에 반납된다.
+ 			} catch (Exception e) {
+ 			}
+ 		}
+ 		//회원 한명의 정보가 담긴 MemberDto객체 리턴해주기
+ 		return count;
+ 	}
+   
+   
+   //getboardList 메소드 
+   
+ public List<FileDto> getList(FileDto dto){
+	   
+	   List<FileDto> list = new ArrayList<>();
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int rowCount = 0;
+	try {
+		conn = new DbcpBean().getConn();
+		String sql =  "SELECT * "
+				+ " FROM (SELECT result1.*, ROWNUM AS rnum "
+				+ " FROM (SELECT num, writer, title, orgFileName, fileSize, regdate "
+				+ " FROM board_file ORDER BY num DESC) result1) "
+				+ " WHERE rnum BETWEEN ? AND ?";
+		pstmt = conn.prepareStatement(sql);
+		//실행할 sql 문이 미완성이라면 여기서 완성
+		pstmt.setInt(1, dto.getStartRowNum());
+		pstmt.setInt(2, dto.getEndRowNum());
+		//select문 수행하고 결과값받아오기
+		rs = pstmt.executeQuery();
+		//반복문 돌면서 resultset에 담긴 내용 추출
+		while (rs.next()) {
+			FileDto tmp = new FileDto();
+			 tmp.setNum(rs.getInt("num"));
+			 tmp.setWriter(rs.getString("writer"));
+			 tmp.setTitle(rs.getString("title"));
+			 tmp.setOrgFileName(rs.getString("orgFileName"));
+			 tmp.setFileSize(rs.getLong("fileSize"));
+			 tmp.setRegdate(rs.getString("regdate"));
+			list.add(tmp);
+
+		}
+	} catch (SQLException se) {
+		se.printStackTrace();
+	} finally {
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close(); //Connection 이 Connection Pool 에 반납된다.
+		} catch (Exception e) {
+		}
+	}
+	//회원 한명의 정보가 담긴 MemberDto객체 리턴해주기
+	return list;
+   }
    
    //delete
    public boolean delete(int num) {
@@ -106,7 +197,7 @@ public class FileDao {
 	return dto;
    }
    
-   public List<FileDto> getList(){
+   public List<FileDto> getListAll(){
 	   
 	   List<FileDto> list = new ArrayList<>();
 		
