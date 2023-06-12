@@ -6,9 +6,13 @@ public class CafeDto {
 	private String title;
 	private String content;
 	private int viewCount;
+	private String regdate;
+	private int startRowNum;
+	private int endRowNum;
 	
-	
-	
+	//생성자 
+	public CafeDto() {}
+
 	public int getNum() {
 		return num;
 	}
@@ -57,18 +61,22 @@ public class CafeDto {
 		this.regdate = regdate;
 	}
 
-	public CafeDto(int num, String writer, String title, String content, int viewCount, String regdate) {
-		super();
-		this.num = num;
-		this.writer = writer;
-		this.title = title;
-		this.content = content;
-		this.viewCount = viewCount;
-		this.regdate = regdate;
+	public int getStartRowNum() {
+		return startRowNum;
 	}
 
-	private String regdate;
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
+
 	
-	//생성자
-	public CafeDto() {}
 }

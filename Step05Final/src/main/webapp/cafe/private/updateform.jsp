@@ -1,5 +1,14 @@
+<%@page import="test.cafe.dao.CafeDao"%>
+<%@page import="test.cafe.dto.CafeDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//get 방식 파라미터로 전달되는 수정할 파일의 글번호 읽어오기
+	int num = Integer.parseInt(request.getParameter("num"));
+	//2. DB 에서 해당글의 정보 얻어오기
+	CafeDto dto=CafeDao.getInstance().getData(num);
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,40 +18,28 @@
 </head>
 <body>
 	<div class="container">
-		<h1>새 글 작성 양식</h1>
-		<form action="insert.jsp" method="post">
-			<div class="mb-2">
+		<h1>글 수정하기</h1>
+		
+		<form action="update.jsp" method="post">
+			<div class="mb-3">
+					<label class="form-label" for="num">글 번호</label>
+					<input class="form-control" type="text" name="num" id="num" value="<%=dto.getNum() %>" readonly />
+			</div>
+			<div class="mb-3">
 				<label class="form-label" for="title">제목</label>
-				<input class="form-control" type="text" name="title" id="title" />
+				<input class="form-control" type="text" name="title" id="title" value="<%=dto.getTitle()%>"/>
 			</div>
-			<div class="mb-2">
-				<label class="form-label" for="content">내용</label>
-				<textarea class="form-control" name="content" id="content" ></textarea>
+			<div class="mb-3">
+				<label class="form-label"  for="content">내용</label>
+				<textarea class="form-control"  name="content" id="content" ><%=dto.getContent()  %></textarea>
 			</div>
-			<button onclick="submitContents(this)" class="btn btn-primary" type="submit">저장</button>
-			<!-- 
-				스마트에디터는 전송할때 onclick으로 메소드를 호출해주어야한다
-				this는 폼의 참조 값이고 아래의 js메소드를 호출 -->
+			
+		<button onclick="submitContents(this)" class="btn btn-primary" type="submit">수정</button>
+		<button class="btn btn-warning" type="reset">reset</button>
+			
 		</form>
 	</div>
-	
-	<%--
-      [ SmartEditor 를 사용하기 위한 설정 ]
-      
-      1. webapp 에 SmartEditor  폴더를 복사해서 붙여 넣기
-      2. webapp 에 upload 폴더 만들어 두기
-      3. webapp/WEB-INF/lib 폴더에 
-         commons-io.jar 파일과 commons-fileupload.jar 파일 붙여 넣기
-      4. <textarea id="content" name="content"> 
-         content 가 아래의 javascript 에서 사용 되기때문에 다른 이름으로 바꾸고 
-            싶으면 javascript 에서  content 를 찾아서 모두 다른 이름으로 바꿔주면 된다. 
-      5. textarea 의 크기가 SmartEditor  의 크기가 된다.
-      6. 폼을 제출하고 싶으면  submitContents(this) 라는 javascript 가 
-            폼 안에 있는 버튼에서 실행되면 된다.
-    --%>
-   
-   <!-- SmartEditor 에서 필요한 javascript 로딩  -->
-   <script src="${pageContext.request.contextPath }/SmartEditor/js/HuskyEZCreator.js"></script>
+	 <script src="${pageContext.request.contextPath }/SmartEditor/js/HuskyEZCreator.js"></script>
    <script>
       var oEditors = [];
       
