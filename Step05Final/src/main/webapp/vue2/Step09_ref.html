@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step09_ref.html</title>
+</head>
+<body>
+    <h1>ref 를 이용해서 문서 객체의 참조값 얻어내기</h1> 
+    <!-- vue로 구현하는 페이지 수가 많아지면 id값을 사용하는데 오류가 발생할 일이 있기때문에 ref를 이용해서 참조값을 얻어낸다. -->
+    <div id="app">
+        <button v-on:click="clicked">눌러보셈</button>
+        <input type="text" ref="one" >
+        <input type="text" ref="two" >
+        <input type="text" ref="three" >
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        let app=new Vue({
+            el:"#app",
+            methods:{
+                clicked(){
+                    // ref="one"     인 문서객체의 참조값 
+                   console.log(this.$refs.one);
+                   this.$refs.one.value="버튼을 눌렀네?";
+                }
+            }
+        });
+    </script>   
+</body>
+</html>

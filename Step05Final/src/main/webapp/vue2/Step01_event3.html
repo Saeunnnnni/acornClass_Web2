@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>이벤트 테스트 3</h1>
+	<div id="app">
+		<div class="box" v-on: mousemover="moved">
+		x : <strong>{{x}}</strong>
+		
+		<br />
+		y : <strong>{{u}}</strong>
+	</div>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		new Vue({
+			el:"#app",
+			data:{
+				x:0,
+				y:0
+			},
+			methods:{
+				moved(e){
+					this.x=e.offsetX;
+					this.y=e.offsetY;
+				}
+			}
+		})
+	</script>
+	
+
+</body>
+</html>
