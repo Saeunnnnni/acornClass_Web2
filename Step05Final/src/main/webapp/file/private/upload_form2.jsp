@@ -24,50 +24,36 @@
 	</div>
 	<script src="${pageContext.request.contextPath }/js/gura_util.js"></script>
 	<script>
-		//폼에 "submit" 이벤트가 일어 났을때 실행할 함수 등록
-		document.querySelector("#myForm").addEventListener("submit", (e)=>{
-			//폼 전송 막기 
-			e.preventDefault();
-			//폼에 입력하거나 선택한 정보를 javascript 로 직접 전송하기
-			//폼에 입력한 데이터를 FormData 에 담고 
-			let data=new FormData(e.target); //e.target 은 form 의 참조값이다.
-			
-			/*
-			fetch("upload2.jsp",{
-				method:"post",
-				body:data
-			})
-			.then(res=>res.text())
-			.then((data)=>{
-				//data 는 upload2.jsp 페이지가 응답한 JSON 형식의 문자열이다.
-				console.log(data);
-				//JSON.parse() 함수를 이용해서 문자열을 실제 object or array 로 변환할수 있다.
-				const result=JSON.parse(data);
-				//result 는 object 
-				console.log(result);
-			});*/
-			
-			
-			/*
-			fetch("upload2.jsp",{
-				method:"post",
-				body:data
-			})
-			.then(res=>res.json())
-			.then((data)=>{
-				//data object 이다 
-				console.log(data);
-			});
-			*/
-			
-			//gura_util.js 안에 있는 함수를 활용하면 아래와 같다
-			ajaxFormPromise(e.target)
-			.then(res=>res.json())
-			.then((data)=>{
-				//data object 이다 
-				console.log(data);
-			});
-		});
-	</script>
+         document.querySelector("#uploadForm").addEventListener("submit", (e)=>{
+            //폼 전송 막기 
+            e.preventDefault();
+            //gura_util.js 에 있는 함수를 호출하면서 폼의 참조값 전달
+            /*
+            ajaxFormPromise(e.target)
+            .then(res=>res.json())
+            .then(data=>{
+               
+            });
+            */
+            //만일 gura_util 을 사용하지 않는다면
+            
+            //서버에 전송할 data 를 구성한다.
+            let data=new FormData(e.target);
+            // fetch() 함수가 리턴하는 Promise 객체를 
+            fetch("${pageContext.request.contextPath }/image/upload",{
+               method:"post",
+               body:data
+            })
+            .then(res=>res.json())
+            .then(data=>{
+               console.log(data);
+               //data 는 {imagePath:"/resources/upload/xxx"} 형식의 object 이다.
+               const imgString=`<img src="${pageContext.request.contextPath }\${data.imagePath}">`;
+               // img 요소를 표현하고 있는 문자열을 HTML 형식으로 해석이 되도록 대입해준다.
+               document.querySelector("#imageWrapper").innerHTML=imgString;
+            });
+         });
+      </script>
+
 </body>
 </html>
