@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   <style>
+    .box{
+            width:100px;
+            height:100px;
+            border:1px solid red;
+        }
+        
+        li{
+        	 width:10px;
+            height:10px;
+            border:1px solid red;
+            margin-top:20px;
+        }
+        
+   </style>
+       
+   
+</head>
+<body>
+    <div id="app">
+        <div class="box"  v-on:mouseover="red">div1</div>
+        <div class="box"  v-on:mouseover="red">div2</div>
+        <div class="box"  v-on:mouseover="red">div3</div>
+    	
+    	
+    	 <input type="checkbox" v-model="isChecked">
+        <p v-show="isChecked">p1</p>
+       <p>isChecked:{{isChecked}}</p>
+       
+        <ul>
+            <li v-for="item in nums"   @click="clicked">{{item}}</li>
+        </ul>
+        
+           <button v-on:click="clicked">눌러보셈</button>
+        <p ref="myParagraph"></p>
+    
+    </div>
+     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   <script>
+   new Vue({
+       el:"#app",
+       data:{
+    	   isChecked:true,
+    	   nums:[10, 20, 30, 40, 50]
+       },
+       methods:{
+         red:function(e){
+                 e.target.style.color="red"}
+       },
+       clicked(e){
+    	  alert("안녕");
+       }
+   });
+
+   </script>
+   
+        
+</body>
+</html>
